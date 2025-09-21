@@ -1,6 +1,28 @@
 # My Personal Project
 
-## A subtitle
+## Research Paper Manager
+
+    The system allows a user to input the titles and disciplines of papers 
+    they've read/are reading/want to read, and give them an overall score 
+    out of 10 based off how useful/how much they liked the paper. It can store the papers
+    based off rating, author, read vs. not read, displine/branch of displine. The
+    application could be used by students, professors, or anyone conducting any form
+    of research. *[The original idea was formed to cater to math reserach, 
+    since thats what i hope to go into, but I've created a more general application 
+    so that it is not restricted to only one displine]*
+    
+    X would, for example, be a paper, the title of a paper, 
+    the displine/ branch of a displine it falls under, 
+    the author of the paper, a personal rating of the paper’s content, 
+    the year a paper was publiushed. 
+    
+    Y would, for example, be a list of papers that the user has read 
+    (or a list of what they want to read), a list of authors they've read papers from, 
+    a list of topics in the displine that they find interesting, a list of top rated papers.
+
+
+## Markdown Tools
+## A subtitle 
 
 A *bulleted* list:
 - item 1
