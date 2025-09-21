@@ -21,6 +21,17 @@
     a list of topics in the displine that they find interesting, a list of top rated papers.
 
 
+
+## User Stories
+
+- As a user, I want to be able to create a new paper description 
+and add it to a list of papers I've read.
+- As a user, I want to be able to view a list of papers I've read.
+- As a user, I want to be able to assign a rating (integer value between 0 and 10)
+to a paper description.
+- As a user, I want to be able to select a author and see a list of papers by that author.
+
+
 ## Markdown Tools
 ## A subtitle 
 
