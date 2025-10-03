@@ -2,19 +2,28 @@ package model;
 
 import java.util.ArrayList;
 
+// do you need to add requires clauses for strings (or can you assume string wont be empty)?
+
 
 // Represents a collection of research papers that has a title, filter,
 // list of ResearchPaper 
 public class ResearchCollection {
     
-    //EFFECTS: constructs a collection with a title,
+    //EFFECTS: constructs a collection with a title, no filter, and
     // an empty list of ResearchPaper
-    public ResearchCollection(){
+    public ResearchCollection(String title){
         // stub
     }
 
     //MODIFIES: this
-    //EFFECTS: filters ResearchCollection based on filter given
+    //EFFECTS: adds a reserach paper to collection 
+    public void addPaper(ResearchPaper paper){
+        //stub
+    }
+
+    //REQUIRES: filter to be a parameter of a ResearchPaper
+    //(title, author, displine)
+    //EFFECTS: filters ResearchCollection based on filter given 
     public void filterCollection(String filter){
         //stub
     }
@@ -32,9 +41,10 @@ public class ResearchCollection {
         return null; //stub
     }
 
-    public ArrayList<ResearchPaper> getResearchPaper(){
+    public ArrayList<ResearchPaper> getResearchCollection(){
         return null; //stub
     }
+
 
     
 
