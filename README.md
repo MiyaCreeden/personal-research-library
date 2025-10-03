@@ -31,12 +31,13 @@
 ## User Stories
 
 - As a user, I want to be able to create a new paper description 
-and add it to a list of papers I've read.
+and add the paper to a list of papers I've read.
 - As a user, I want to be able to view a list of papers I've read.
 - As a user, I want to be able to compute an overall rating (integer value between 0 and 10)
 from two sub-ratings.
 - As a user, I want to be able to filter a list based off a selected author (see all papers by that
 author).
+- As a user, I want to be able to filter a list based off a selected disipline.
 
 
 ## Markdown Tools
