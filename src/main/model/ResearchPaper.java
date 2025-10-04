@@ -3,11 +3,23 @@ package model;
 // Represents an academic paper with a title,
 // displine, an overall rating, an author
 public class ResearchPaper {
+    private String pTitle;
+    private String author;
+    private String displine;
+    private int enjoy;
+    private int usefull;
+    private String readStatus;
+    private int rating; 
+
     
-    //EFFECTS: constructs a paper with a title, author,
+    //EFFECTS: constructs a paper with a title, author, displine,
     // overall rating =0, and a status of unread
-    public ResearchPaper(String title, String author, String displine) {
-       //stub
+    public ResearchPaper(String pTitle, String author, String displine) {
+       this.pTitle = pTitle;
+       this.author = author;
+       this.displine = displine;
+       this.rating = 0;
+       this.readStatus = "unread";
     }
 
     //REQUIRES: 5 ≥ enjoy and usefull ≥ 0
@@ -15,43 +27,43 @@ public class ResearchPaper {
     //EFFECTS: assigns an overall rating to a paper based off
     // enjoyment and usefullness of the paper 
     public void overallRating(int enjoy, int usefull){
-        //stub
+        this.rating = this.rating + enjoy + usefull;
     }
 
     //MODIFIES: this
     //EFFECTS: updates paper status to read
     public void markAsRead(){
-        //stub
+        this.readStatus = "read";
     }
 
     //MODIFIES: this
     //EFFECTS: updates paper status to unread
     public void markAsUnread(){
-        //stub
+        this.readStatus = "unread";
     }
 
 
     public String getTitle(){
-        return null;//stub
+        return pTitle;
     }
 
     public String getAuthor(){
-        return null; //stub
+        return author; 
     }
 
     public int getOverallRating(){
-        return 0; //stub
+        return rating; 
     }
 
     public String getDisipline(){
-        return null; //stub
+        return displine; 
     }
 
     public String getReadStatus(){
-        return null; //stub
+        return readStatus; 
     }
 
-    //define assertEquals method
+    
  
    
 }
