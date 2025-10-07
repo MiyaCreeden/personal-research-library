@@ -22,22 +22,23 @@
     
     Y would, for example, be a list of papers that the user has read 
     (or a list of what they want to read), a list of authors they've read papers from, 
-    a list of topics in the displine that they find interesting, a list of top rated papers,
-    a list filtered with papers from a given displine or author, a sorted list based on rating
-    (high to low or vice versa).
-
+    a list of topics in the displine that they find interesting, a list of top rated papers, or
+    a list filtered with papers from a given displine or author.
 
 
 ## User Stories
 
 - As a user, I want to be able to create a new paper description 
 and add the paper to a list of papers I've read.
+- As a user, I want to be able to add multiple papers to my Reserach collection.
 - As a user, I want to be able to view a list of papers I've read.
 - As a user, I want to be able to compute an overall rating (integer value between 0 and 10)
 from two sub-ratings.
 - As a user, I want to be able to filter a list based off a selected author (see all papers by that
 author).
 - As a user, I want to be able to filter a list based off a selected disipline.
+- As a user, I want to be able to serach for a paper with a specific title in my collection.
+- As a user, I want to be able to view all reserach papers in my collection. 
 
 
 ## Markdown Tools
