@@ -1,24 +1,21 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-// do you need to add requires clauses for strings (or can you assume string wont be empty)?
+
 
 
 // Represents a collection of research papers that has a title, filter,
 // list of ResearchPaper 
 public class ResearchCollection {
-    private String cTitle;
     private ResearchPaper paper; 
     private String filter;
     private ArrayList<ResearchPaper> myPapers;
 
     
-    //EFFECTS: constructs a collection with a title, no filter, and
+    //EFFECTS: constructs a collection with no filter and
     // an empty list of ResearchPaper
-    public ResearchCollection(String cTitle){
-        this.cTitle = cTitle;
+    public ResearchCollection(){
         myPapers = new ArrayList<>();
     }
 
@@ -32,22 +29,54 @@ public class ResearchCollection {
         }
     }
 
-    //REQUIRES: filter to be a parameter of a ResearchPaper
+    //EFFECTS: constructs a new list of only the papers in the collection
+    // that have been read
+    public ArrayList<ResearchPaper> readCollection(){
+        ArrayList<ResearchPaper> read = new ArrayList<>();
+        for(ResearchPaper paper : myPapers){
+            if(paper.getReadStatus()){
+                read.add(paper);
+        }
+    }
+    
+    return read;
+}
+            
+
+        
+    
+
+    //EFFECTS: constructs a new list of only the papers in the collection
+    // that are unread
+    public ArrayList<ResearchPaper> unreadCollection(){
+        ArrayList<ResearchPaper> unread = new ArrayList<>();
+        for(ResearchPaper paper : myPapers){
+            if(!(paper.getReadStatus())){
+                unread.add(paper);
+        }
+    }
+    
+    return unread;
+    }
+
+    //REQUIRES: filter to be a string parameter of a ResearchPaper
     //(title, author, displine)
     //EFFECTS: filters ResearchCollection based on filter given 
     public ArrayList<ResearchPaper> filterCollection(String filter){
         ArrayList<ResearchPaper> filtered = new ArrayList<>();
         for(ResearchPaper paper : myPapers){
-            if(filter == paper.getPTitle()){
+            if(paper.getPTitle().equals(filter)){
                 filtered.add(paper);
 
             } 
-            if(filter == paper.getAuthor()){
+            
+            if(paper.getAuthor().equals(filter)){
                 filtered.add(paper);
             }
-            if(filter == paper.getDisipline()){
+            if(paper.getDisipline().equals(filter)){
                 filtered.add(paper);
             }
+    
         }
             return filtered;
 
@@ -64,9 +93,6 @@ public class ResearchCollection {
         return filter; 
     }
 
-    public String getCTitle(){
-        return cTitle;
-    }
 
     public ArrayList<ResearchPaper> getResearchCollection(){
         return myPapers; 
