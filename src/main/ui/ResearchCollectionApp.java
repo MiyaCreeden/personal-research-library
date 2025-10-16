@@ -1,6 +1,5 @@
 package ui;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -15,28 +14,26 @@ import model.ResearchPaper;
 //Credit: code written in this class is inspired by FlashcardReviewer Lab project
 // and TellerApp Project
 
-
 public class ResearchCollectionApp {
     private ResearchCollection collection;
     private Scanner scanner;
     private boolean isRunning;
     private int currentIndex;
 
-    //EFFECTS: creates a new instance of the application console
-    public ResearchCollectionApp(){
+    // EFFECTS: creates a new instance of the application console
+    public ResearchCollectionApp() {
         intialize();
 
         System.out.println("Welcome to your Research Collection!");
 
-        while(this.isRunning)
+        while (this.isRunning) {
             runMainMenu();
+        }
     }
 
-   
-
-    //MODIFIES: this
-    //EFFECTS: intializes the program with intial values
-    public void intialize(){
+    // MODIFIES: this
+    // EFFECTS: intializes the program with intial values
+    public void intialize() {
         this.collection = new ResearchCollection();
         this.scanner = new Scanner(System.in);
         this.isRunning = true;
@@ -44,8 +41,8 @@ public class ResearchCollectionApp {
 
     }
 
-    //EFFECTS: constructs the display menu for the application
-    public void displayMainMenu(){
+    // EFFECTS: constructs the display menu for the application
+    public void displayMainMenu() {
         System.out.println("Please select an option:\n");
         System.out.println("a: Add a new paper to your collection");
         System.out.println("v: View your collection");
@@ -55,16 +52,16 @@ public class ResearchCollectionApp {
         System.out.println("q: Exit the application");
     }
 
-    //MODIFIES: this
-    //EFFECTS: displays and processes the user input for main menu
-    public void runMainMenu(){
+    // MODIFIES: this
+    // EFFECTS: displays and processes the user input for main menu
+    public void runMainMenu() {
         displayMainMenu();
         String input = this.scanner.nextLine();
         processMainMenuCommands(input);
     }
 
-    //EFFECTS: processes users input from main menu
-    public void processMainMenuCommands(String input){
+    // EFFECTS: processes users input from main menu
+    public void processMainMenuCommands(String input) {
         switch (input) {
             case "a":
                 addNewPaper();
@@ -80,7 +77,7 @@ public class ResearchCollectionApp {
                 break;
             case "u":
                 viewUnread();
-                break;   
+                break;
             case "q":
                 quit();
                 break;
@@ -89,9 +86,9 @@ public class ResearchCollectionApp {
         }
     }
 
-    //MODIFIES: reserach collection
-    //EFFECTS: adds a new paper to your research collection
-    public void addNewPaper(){
+    // MODIFIES: reserach collection
+    // EFFECTS: adds a new paper to your research collection
+    public void addNewPaper() {
         System.out.println("Please enter the title of the paper");
         String title = this.scanner.nextLine();
 
@@ -101,99 +98,90 @@ public class ResearchCollectionApp {
         System.out.println("\nPlease enter displine");
         String displine = this.scanner.nextLine();
 
-        
         ResearchPaper paper = new ResearchPaper(title, author, displine);
 
         this.collection.addPaper(paper);
         System.out.println("\nNew paper added to collection!");
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays entire Reserach Collection
+    public void viewCollection() {
 
-    //MODIFIES: this
-    //EFFECTS: displays entire Reserach Collection
-    public void viewCollection(){
-
-        for(ResearchPaper paper : collection.getResearchCollection()){
+        for (ResearchPaper paper : collection.getResearchCollection()) {
             System.out.println(paper.getPTitle());
-        } 
-
+        }
 
         displayGivenCollection(this.collection);
 
-        
     }
 
-    //EFFECTS: displays current collection and shows view menu
-    public void displayGivenCollection(ResearchCollection collection){
+    // EFFECTS: displays current collection and shows view menu
+    public void displayGivenCollection(ResearchCollection collection) {
         if (0 == collection.getResearchCollection().size()) {
             System.out.println("Error: Your Research Collection is empty, please add a paper.");
             return;
         }
 
         displayViewMenu();
-        String input = ""; /// this line of code is cause an invalid input message after evalutating a rating for a paper 
+        String input = ""; /// this line of code is cause an invalid input message after evalutating a
+                           /// rating for a paper
         while (!input.equals("q")) {
             ResearchPaper currentPaper = collection.getResearchCollection().get(this.currentIndex);
             displayPaper(currentPaper);
             input = this.scanner.nextLine();
-            processViewMenuCommands(input, collection);
+            processVcommands(input, collection);
         }
         this.currentIndex = 0;
     }
 
-    //EFFECTS: displays given flashcard
-    public void displayPaper(ResearchPaper paper){
+    // EFFECTS: displays given flashcard
+    public void displayPaper(ResearchPaper paper) {
         System.out.println(paper.getPTitle());
         System.out.println("By:");
-        System.out.println(paper.getAuthor()); 
+        System.out.println(paper.getAuthor());
         System.out.println("Displine:");
         System.out.println(paper.getDisipline());
     }
 
-    //MODIFIES: this
-    //EFFECTS: displays list of papers marked as read
-    public void viewRead(){
+    // MODIFIES: this
+    // EFFECTS: displays list of papers marked as read
+    public void viewRead() {
         ArrayList<ResearchPaper> read = new ArrayList<>();
 
         for (ResearchPaper currentPaper : this.collection.getResearchCollection()) {
-            
+
             if (currentPaper.getReadStatus() == true) {
                 read.add(currentPaper);
             }
         }
 
-        for(ResearchPaper paper : read){
+        for (ResearchPaper paper : read) {
             System.out.println(paper.getPTitle());
-        } 
+        }
     }
 
-    //MODIFIES: this
-    //EFFECTS: displays list of papers marked as read
-    public void viewUnread(){
+    // MODIFIES: this
+    // EFFECTS: displays list of papers marked as read
+    public void viewUnread() {
         ArrayList<ResearchPaper> unread = new ArrayList<>();
 
         for (ResearchPaper currentPaper : this.collection.getResearchCollection()) {
-            
+
             if (currentPaper.getReadStatus() == false) {
                 unread.add(currentPaper);
             }
         }
 
-        for(ResearchPaper paper : unread){
+        for (ResearchPaper paper : unread) {
             System.out.println(paper.getPTitle());
         }
 
-        
-
-        
     }
-    
-    
 
-
-    //EFFECTS: displays a list of commands that can be used in the 
+    // EFFECTS: displays a list of commands that can be used in the
     // view menu
-    public void displayViewMenu(){
+    public void displayViewMenu() {
         System.out.println("Please select an option:\n");
         System.out.println("o: Rate this paper");
         System.out.println("r: Mark this paper as read");
@@ -203,37 +191,35 @@ public class ResearchCollectionApp {
         System.out.println("q: Return to main menu");
     }
 
-    //MODIFIES: this
-    //EFFECTS: displays and processses the user input for the view menu
-    public void runViewMenu(){
+    // MODIFIES: this
+    // EFFECTS: displays and processses the user input for the view menu
+    public void runViewMenu() {
         displayViewMenu();
         String input = this.scanner.nextLine();
-        processViewMenuCommands(input, collection);
+        processVcommands(input, collection);
     }
 
-    //EFFECTS: processes the users input in the view menu
-    public void processViewMenuCommands(String input, ResearchCollection collection){
+    // EFFECTS: processes the users input in the view menu
+    public void processVcommands(String input, ResearchCollection collection) {
         System.out.print("\n");
-
         ResearchPaper currentPaper = collection.getResearchCollection().get(this.currentIndex);
         switch (input) {
-            case "o":
-                ratePaper(currentPaper);
-                break; 
+            case "o": ratePaper(currentPaper);
+                break;
             case "r":
                 markPaperAsRead(currentPaper);
-                break;  
+                break;
             case "u":
                 markPaperAsUnread(currentPaper);
-                break;  
+                break;
             case "n":
                 getNextPaper(collection);
                 break;
             case "p":
                 getPreviousPaper();
-                break;   
+                break;
             case "q":
-                System.out.println("Returning to main menu:");;
+                System.out.println("Returning to main menu:");
                 break;
             default:
                 System.out.println("Invalid option inputted, try again");
@@ -262,91 +248,81 @@ public class ResearchCollectionApp {
             this.currentIndex--;
         }
 
-        displayViewMenu();addNewPaper();
+        displayViewMenu();
+        addNewPaper();
     }
 
-
-
-
-    //MODIFIES: this 
-    //EFFECTS: processes a user filter input and displays a list of 
+    // MODIFIES: this
+    // EFFECTS: processes a user filter input and displays a list of
     // papers matching the filter
-    public void viewByFilter(){
+    public void viewByFilter() {
 
         System.out.println("...please enter your search term");
         String filter = this.scanner.nextLine();
 
         
-        for(ResearchPaper paper : collection.filterCollection(filter)){
+
+        if(collection.filterCollection(filter).isEmpty()){
+            System.out.println("Sorry, no papers match that search term");
+        }
+
+        for (ResearchPaper paper : collection.filterCollection(filter)) {
             System.out.println(paper.getPTitle());
         }
 
-
     }
 
-    //MODIFIES: research paper
-    //EFFECTS: marks a paper as read
-    public void markPaperAsRead(ResearchPaper paper){
+    // MODIFIES: research paper
+    // EFFECTS: marks a paper as read
+    public void markPaperAsRead(ResearchPaper paper) {
         System.out.println(paper.getPTitle() + " was read!");
         paper.markAsRead();
 
         displayViewMenu();
-    } 
+    }
 
-    //MODIFIES: research paper
-    //EFFECTS: marks a paper as unread
-    public void markPaperAsUnread(ResearchPaper paper){
+    // MODIFIES: research paper
+    // EFFECTS: marks a paper as unread
+    public void markPaperAsUnread(ResearchPaper paper) {
         System.out.println(paper.getPTitle() + " hasn't been read.");
         paper.markAsUnread();
 
         displayViewMenu();
-    } 
-
-    //REQUIRES: 5 ≥ (enjoy and usefull) ≥ 0
-    //MODIFIES: reserach paper
-    //EFFECTS: computes rating for paper
-    public void ratePaper(ResearchPaper paper){
-
-        
-    try{
-        System.out.println("Please enter your enjoyment of this paper from 0 to 5:");
-        int enjoy = Integer.parseInt(this.scanner.nextLine());
-
-        System.out.println("Please enter how usefull this paper was from 0 to 5:");
-        int usefull = Integer.parseInt(this.scanner.nextLine());
-
-        
-
-        if(enjoy >= 0 && enjoy <= 5 && usefull >= 0 && usefull <= 5){
-           paper.overallRating(enjoy, usefull);
-           System.out.println("You rated this paper:" + paper.getOverallRating());
-        }else{
-
-            System.out.println("Invalid inputs: values should be 0 =< value =< 5, try again.");
-        }
-    } catch (NumberFormatException e){
-        System.out.println("Please input numbers for enjoy and usefull");
     }
 
-    
+    // REQUIRES: 5 ≥ (enjoy and usefull) ≥ 0
+    // MODIFIES: reserach paper
+    // EFFECTS: computes rating for paper
+    public void ratePaper(ResearchPaper paper) {
+
+        try {
+            System.out.println("Please enter your enjoyment of this paper from 0 to 5:");
+            int enjoy = Integer.parseInt(this.scanner.nextLine());
+
+            System.out.println("Please enter how usefull this paper was from 0 to 5:");
+            int usefull = Integer.parseInt(this.scanner.nextLine());
+
+            if (enjoy >= 0 && enjoy <= 5 && usefull >= 0 && usefull <= 5) {
+                paper.overallRating(enjoy, usefull);
+                System.out.println("You rated this paper:" + paper.getOverallRating());
+            } else {
+
+                System.out.println("Invalid inputs: values should be 0 =< value =< 5, try again.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Please input numbers for enjoy and usefull");
+        }
 
         displayViewMenu();
-        
+
     }
-    
 
-        
-
-    //MODIFIES: this 
-    //EFFECTS: quits application, displays closing message
-    public void quit(){
+    // MODIFIES: this
+    // EFFECTS: quits application, displays closing message
+    public void quit() {
         System.out.println("Thanks for doing your Research!");
         System.out.println("Have a good day!");
         this.isRunning = false;
     }
 
-
-
-    
-    
 }
