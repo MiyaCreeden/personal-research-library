@@ -14,8 +14,9 @@ import model.ResearchPaper;
 // compute a rating for a paper, filter the collection based off a
 // given author or displine
 
-//Credit: code written in this class is inspired by FlashcardReviewer Lab project
-// and TellerApp Project
+//Credit: code written in this class is inspired by FlashcardReviewer Lab project 
+//(https://us.prairielearn.com/pl/workspace/3579775)
+// and TellerApp Project (https://github.students.cs.ubc.ca/CPSC210/TellerApp.git)
 
 @ExcludeFromJacocoGeneratedReport
 public class ResearchCollectionApp {
