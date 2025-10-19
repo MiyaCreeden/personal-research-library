@@ -39,6 +39,9 @@ author).
 - As a user, I want to be able to filter a list based off a selected disipline.
 - As a user, I want to be able to serach for a paper with a specific title in my collection.
 - As a user, I want to be able to view all reserach papers in my collection. 
+- As a user, I want to be reminded too save my collection when I quit the application 
+and given the option to save my research collection
+- As a user, when i open the application I want to be given the option to reload my research collection
 
 
 ## Markdown Tools
