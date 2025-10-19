@@ -14,7 +14,7 @@ import model.ResearchCollection;
 public class JsonReader {
 
     //EFFECTS: constructs a reader to read from the source file
-    public JsonReader(){
+    public JsonReader(String source){
         //stub
     }
 
@@ -26,24 +26,24 @@ public class JsonReader {
 
     // EFFECTS: reads source file as string and returns it; 
     // throws IOException if error occurs
-    private String readFile() throws IOException {
+    private String readFile(String source) throws IOException {
         return null;//stub
     }
 
     // EFFECTS: parses workroom from JSON object and returns it
-    private ResearchCollection parseCollection() {
+    private ResearchCollection parseCollection(JSONObject object) {
         return null; //stub
     }
 
     // MODIFIES: research collection
     // EFFECTS: parses papers from JSON object and adds them to research collection
-    private void addPapers() {
+    private void addPapers(ResearchCollection collection, JSONObject object) {
         //stub
     }
 
     // MODIFIES: research collection
     // EFFECTS: parses paper from JSON object and adds it to research collection
-    private void addThingy() {
+    private void addThingy(ResearchCollection collection, JSONObject object) {
         //stub
     }
 
