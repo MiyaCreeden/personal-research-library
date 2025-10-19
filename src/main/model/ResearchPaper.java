@@ -1,8 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistance.Writable;
+
 // Represents an academic paper with a title,
 // displine, an overall rating, an author, and a readStatus
-public class ResearchPaper {
+public class ResearchPaper implements Writable{
     private String ptitle;
     private String author;
     private String displine;
@@ -58,5 +63,23 @@ public class ResearchPaper {
     public boolean getReadStatus() {
         return readStatus;
     }
+
+    //Credit: code below is modeled from JsonSerilizationDemo
+// (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", ptitle);
+        json.put("author", author);
+        json.put("displine", displine);
+        json.put("read", readStatus);
+        json.put("rating", rating);
+        return json;
+    }
+
+    
+
+   
 
 }

@@ -2,9 +2,14 @@ package model;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistance.Writable;
+
 // Represents a collection of research papers that has a title, filter,
 // list of ResearchPaper 
-public class ResearchCollection {
+public class ResearchCollection implements Writable {
     private ArrayList<ResearchPaper> myPapers;
 
     // EFFECTS: constructs a collection with no filter and
@@ -74,6 +79,27 @@ public class ResearchCollection {
 
     public ArrayList<ResearchPaper> getResearchCollection() {
         return myPapers;
+    }
+
+    //Credit: code below is modeled from JsonSerilizationDemo
+// (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
+
+@Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("My papers", papersToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray papersToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (ResearchPaper p : myPapers) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
     }
 
 }

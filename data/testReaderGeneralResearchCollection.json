@@ -1,7 +1,7 @@
 {
     "My papers": [
         {
-            "name": "title1",
+            "title": "title1",
             "author": "miya",
             "displine": "math",
             "read": true,
@@ -9,7 +9,7 @@
 
         },
         {
-            "name": "title2",
+            "title": "title2",
             "author": "daph",
             "displine": "econ",
             "read": false,
