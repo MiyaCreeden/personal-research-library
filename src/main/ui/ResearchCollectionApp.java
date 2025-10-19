@@ -1,6 +1,9 @@
 package ui;
 
 import java.util.Scanner;
+
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+
 import java.util.ArrayList;
 
 import model.ResearchCollection;
@@ -14,6 +17,7 @@ import model.ResearchPaper;
 //Credit: code written in this class is inspired by FlashcardReviewer Lab project
 // and TellerApp Project
 
+@ExcludeFromJacocoGeneratedReport
 public class ResearchCollectionApp {
     private ResearchCollection collection;
     private Scanner scanner;
