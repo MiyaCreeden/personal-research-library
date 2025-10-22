@@ -4,10 +4,14 @@ import java.util.Scanner;
 
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import model.ResearchCollection;
 import model.ResearchPaper;
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
 // Represents a Research Collection application (user interface)
 // lets you view your reserach collection, add multiple papers,
@@ -17,6 +21,8 @@ import model.ResearchPaper;
 //Credit: code written in this class is inspired by FlashcardReviewer Lab project 
 //(https://us.prairielearn.com/pl/workspace/3579775)
 // and TellerApp Project (https://github.students.cs.ubc.ca/CPSC210/TellerApp.git)
+// and JsonSerilizationDemo
+// (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
 
 @ExcludeFromJacocoGeneratedReport
 public class ResearchCollectionApp {
@@ -24,9 +30,12 @@ public class ResearchCollectionApp {
     private Scanner scanner;
     private boolean isRunning;
     private int currentIndex;
+    private static final String JSON_STORE = "./data/researchcollection.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: creates a new instance of the application console
-    public ResearchCollectionApp() {
+    public ResearchCollectionApp() throws FileNotFoundException{
         intialize();
 
         System.out.println("Welcome to your Research Collection!");
@@ -43,6 +52,8 @@ public class ResearchCollectionApp {
         this.scanner = new Scanner(System.in);
         this.isRunning = true;
         this.currentIndex = 0;
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
     }
 
@@ -54,6 +65,8 @@ public class ResearchCollectionApp {
         System.out.println("f: Search collection by author, title, or displine...");
         System.out.println("r: View papers you have read");
         System.out.println("u: View papers you have not read yet");
+        System.out.println("s: Save your collection to file");
+        System.out.println("l: Load your collection from file");
         System.out.println("q: Exit the application");
     }
 
@@ -83,11 +96,39 @@ public class ResearchCollectionApp {
             case "u":
                 viewUnread();
                 break;
+            case "s":
+                save();
+                break;
+            case "l":
+                load();
+                break;        
             case "q":
                 quit();
                 break;
             default:
                 System.out.println("Invalid option inputted, try again");
+        }
+    }
+
+    //EFFECTS: reloads research collection from file
+    private void load() {
+       try {
+            collection = jsonReader.read();
+            System.out.println("Loaded " + "My papers" + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    //EFFECTS: saves research collection to file
+    private void save() {
+       try {
+            jsonWriter.open();
+            jsonWriter.write(collection);
+            jsonWriter.close();
+            System.out.println("Saved " + "My papers" + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
