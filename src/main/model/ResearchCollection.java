@@ -81,10 +81,10 @@ public class ResearchCollection implements Writable {
         return myPapers;
     }
 
-    //Credit: code below is modeled from JsonSerilizationDemo
-// (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
+    // Credit: code below is modeled from JsonSerilizationDemo
+    // (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
 
-@Override
+    @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("My papers", papersToJson());

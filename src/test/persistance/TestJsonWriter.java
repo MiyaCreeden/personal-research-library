@@ -18,13 +18,13 @@ import model.ResearchPaper;
 // (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
 
 @ExcludeFromJacocoGeneratedReport
-public class TestJsonWriter extends JsonTest{
+public class TestJsonWriter extends JsonTest {
 
     private ResearchPaper testpaper1;
     private ResearchPaper testpaper2;
 
     @BeforeEach
-    void runBefore(){
+    void runBefore() {
         testpaper1 = new ResearchPaper("title1", "miya", "math");
         testpaper2 = new ResearchPaper("title2", "daph", "econ");
         //testpaper1.markAsRead();
@@ -33,7 +33,7 @@ public class TestJsonWriter extends JsonTest{
 
     }
 
-     @Test
+    @Test
     void testWriterInvalidFile() {
         try {
             JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");

@@ -35,7 +35,7 @@ public class ResearchCollectionApp {
     private JsonReader jsonReader;
 
     // EFFECTS: creates a new instance of the application console
-    public ResearchCollectionApp() throws FileNotFoundException{
+    public ResearchCollectionApp() throws FileNotFoundException {
         intialize();
 
         System.out.println("Welcome to your Research Collection!");
@@ -81,38 +81,30 @@ public class ResearchCollectionApp {
     // EFFECTS: processes users input from main menu
     public void processMainMenuCommands(String input) {
         switch (input) {
-            case "a":
-                addNewPaper();
+            case "a": addNewPaper();
                 break;
-            case "v":
-                viewCollection();
+            case "v": viewCollection();
                 break;
-            case "f":
-                viewByFilter();
+            case "f": viewByFilter();
                 break;
-            case "r":
-                viewRead();
+            case "r": viewRead();
                 break;
-            case "u":
-                viewUnread();
+            case "u": viewUnread();
                 break;
-            case "s":
-                save();
+            case "s": save();
                 break;
-            case "l":
-                load();
-                break;        
-            case "q":
-                quit();
+            case "l": load();
+                break;
+            case "q": quit();
                 break;
             default:
                 System.out.println("Invalid option inputted, try again");
         }
     }
 
-    //EFFECTS: reloads research collection from file
+    // EFFECTS: reloads research collection from file
     private void load() {
-       try {
+        try {
             collection = jsonReader.read();
             System.out.println("Loaded " + "My papers" + " from " + JSON_STORE);
         } catch (IOException e) {
@@ -120,9 +112,9 @@ public class ResearchCollectionApp {
         }
     }
 
-    //EFFECTS: saves research collection to file
+    // EFFECTS: saves research collection to file
     private void save() {
-       try {
+        try {
             jsonWriter.open();
             jsonWriter.write(collection);
             jsonWriter.close();
@@ -250,7 +242,8 @@ public class ResearchCollectionApp {
         System.out.print("\n");
         ResearchPaper currentPaper = collection.getResearchCollection().get(this.currentIndex);
         switch (input) {
-            case "o": ratePaper(currentPaper);
+            case "o":
+                ratePaper(currentPaper);
                 break;
             case "r":
                 markPaperAsRead(currentPaper);
@@ -264,11 +257,9 @@ public class ResearchCollectionApp {
             case "p":
                 getPreviousPaper();
                 break;
-            case "q":
-                System.out.println("Returning to main menu:");
+            case "q": System.out.println("Returning to main menu:");
                 break;
-            default:
-                System.out.println("Invalid option inputted, try again");
+            default: System.out.println("Invalid option inputted, try again");
         }
     }
 
@@ -306,9 +297,7 @@ public class ResearchCollectionApp {
         System.out.println("...please enter your search term");
         String filter = this.scanner.nextLine();
 
-        
-
-        if(collection.filterCollection(filter).isEmpty()){
+        if (collection.filterCollection(filter).isEmpty()) {
             System.out.println("Sorry, no papers match that search term");
         }
 

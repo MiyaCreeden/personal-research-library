@@ -7,7 +7,7 @@ import persistance.Writable;
 
 // Represents an academic paper with a title,
 // displine, an overall rating, an author, and a readStatus
-public class ResearchPaper implements Writable{
+public class ResearchPaper implements Writable {
     private String ptitle;
     private String author;
     private String displine;
@@ -64,16 +64,16 @@ public class ResearchPaper implements Writable{
         return readStatus;
     }
 
-    public void setRating(int overallrating){
+    public void setRating(int overallrating) {
         this.rating = overallrating;
     }
 
-    public void setReadStatus(boolean read){
+    public void setReadStatus(boolean read) {
         this.readStatus = read;
     }
 
-    //Credit: code below is modeled from JsonSerilizationDemo
-// (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
+    // Credit: code below is modeled from JsonSerilizationDemo
+    // (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
 
     @Override
     public JSONObject toJson() {
@@ -85,9 +85,5 @@ public class ResearchPaper implements Writable{
         json.put("rating", rating);
         return json;
     }
-
-    
-
-   
 
 }

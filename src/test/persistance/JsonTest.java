@@ -11,12 +11,12 @@ import model.ResearchPaper;
 @ExcludeFromJacocoGeneratedReport
 
 public class JsonTest {
-    protected void checkPaper(String title, String author, String displine, Boolean read, int rating, ResearchPaper paper) {
-        assertEquals(title, paper.getPTitle());
-        assertEquals(displine, paper.getDisipline());
-        assertEquals(author, paper.getAuthor());
-        assertEquals(read, paper.getReadStatus());
-        assertEquals(rating, paper.getOverallRating());
+    protected void checkPaper(String t, String a, String d, Boolean r, int rating, ResearchPaper p) {
+        assertEquals(t, p.getPTitle());
+        assertEquals(d, p.getDisipline());
+        assertEquals(a, p.getAuthor());
+        assertEquals(r, p.getReadStatus());
+        assertEquals(rating, p.getOverallRating());
     }
 }
 

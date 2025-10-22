@@ -21,13 +21,13 @@ public class JsonReader {
     private String source;
 
     //EFFECTS: constructs a reader to read from the source file
-    public JsonReader(String source){
+    public JsonReader(String source) {
         this.source = source;
     }
 
     //EFFECTS: reads a ResearchCollection from file and returns it, throws 
     // IO Exception if it cant read from file
-    public ResearchCollection read() throws IOException{
+    public ResearchCollection read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseCollection(jsonObject);

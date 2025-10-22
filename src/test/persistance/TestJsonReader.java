@@ -18,7 +18,7 @@ import model.ResearchPaper;
 // (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
 
 @ExcludeFromJacocoGeneratedReport
-public class TestJsonReader extends JsonTest{
+public class TestJsonReader extends JsonTest {
 
     private ResearchCollection collection;
     private List<ResearchPaper> papers;
@@ -28,7 +28,7 @@ public class TestJsonReader extends JsonTest{
 
 
     @BeforeEach
-    void runBefore(){
+    void runBefore() {
         
         collection = new ResearchCollection();
         List<ResearchPaper> papers = new ArrayList<>();
@@ -90,7 +90,7 @@ public class TestJsonReader extends JsonTest{
     }
 
     @Test
-    void testReaderGeneralCollectionNoUserMods(){
+    void testReaderGeneralCollectionNoUserMods() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralCollectionNoUserMods.json");
         
         try {
