@@ -1,16 +1,16 @@
 {"My papers": [
     {
-        "read": false,
+        "read": true,
         "author": "miya",
         "displine": "math",
-        "rating": 0,
+        "rating": 6,
         "title": "title1"
     },
     {
         "read": false,
         "author": "daph",
         "displine": "econ",
-        "rating": 0,
+        "rating": 3,
         "title": "title2"
     }
 ]}

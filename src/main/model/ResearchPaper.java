@@ -64,6 +64,14 @@ public class ResearchPaper implements Writable{
         return readStatus;
     }
 
+    public void setRating(int overallrating){
+        this.rating = overallrating;
+    }
+
+    public void setReadStatus(boolean read){
+        this.readStatus = read;
+    }
+
     //Credit: code below is modeled from JsonSerilizationDemo
 // (https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git)
 

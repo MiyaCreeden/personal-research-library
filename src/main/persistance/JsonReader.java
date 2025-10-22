@@ -48,7 +48,6 @@ public class JsonReader {
 
     // EFFECTS: parses workroom from JSON object and returns it
     private ResearchCollection parseCollection(JSONObject object) {
-        String name = object.getString("pTitle");
         ResearchCollection collection = new ResearchCollection();
         addPapers(collection, object);
         return collection;
@@ -73,12 +72,15 @@ public class JsonReader {
         Boolean readStatus = object.getBoolean("read");
         int rating = object.getInt("rating");
         ResearchPaper paper = new ResearchPaper(ptitle, author, displine);
+        paper.setRating(rating);
+        paper.setReadStatus(readStatus);
+        //when you instantiate a new paper its reseting the rating to 0 and readstatus to false
         collection.addPaper(paper);
     }
 
 }
 
-    // how do i assign the boolean and int values from the user if they arent a parameter of a paper
+    
 
 
 

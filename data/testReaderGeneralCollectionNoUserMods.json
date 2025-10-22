@@ -1,0 +1,12 @@
+{
+    "My papers": [
+        {
+            "title": "title3",
+            "author": "jim",
+            "displine": "bio",
+            "read": false,
+            "rating": 0
+
+        }
+    ]
+}
