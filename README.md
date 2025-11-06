@@ -45,6 +45,18 @@ and given the option to save my research collection
 
 
 
+## Instructions for End User
+- click "Search" button to enter a serach term and click enter command to see filtered collection based on search term
+- click "Add Paper" to add a paper to your collection
+
+- You can view the panel that displays the Xs that have already been added to the Y by clicking the "View Collection" button
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by clicking the button "Add Paper"
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by clicking the "Search" button, 
+typing in a search term, clicking enter command (on computer)
+- You can locate my visual component by viewing your collection
+- You can save the state of my application by clicking the "Save" button
+- You can reload the state of my application by clicking the "Collection History" button
+
 
 ## Markdown Tools
 ## A subtitle 
