@@ -27,6 +27,7 @@ import javax.swing.WindowConstants;
 
 import org.w3c.dom.events.MouseEvent;
 
+
 import model.ResearchCollection;
 import model.ResearchPaper;
 
@@ -57,33 +58,32 @@ public class ResearchCollectionGUI extends JFrame{
 		setTitle("My Research Collection");
 		setSize(WIDTH, HEIGHT);
 		
-		
+		this.fillColor = Color.pink;
 		addMenu();
-		addPaperDisplayPanel();
 		
-		
-		controlPanel.pack();
-		controlPanel.setVisible(true);
-		desktop.add(controlPanel);
 		
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		centreOnScreen();
 		setVisible(true);
     }
 
+    // EFFECTS: centres display panel on screen
    private void centreOnScreen() {
 		int width = Toolkit.getDefaultToolkit().getScreenSize().width;
 		int height = Toolkit.getDefaultToolkit().getScreenSize().height;
 		setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
 	}
 
+     //EFFECTS: adds display panels for papers
     private void addPaperDisplayPanel() {
         ResearchPaperGUI paperGUI = new ResearchPaperGUI();
-		controlPanel.add(paperGUI, BorderLayout.NORTH);
+		desktop.add(paperGUI, BorderLayout.NORTH);
     }
 
-   
+    
 
+   
+    //EFFECTS: adds menu
     private void addMenu() {
         JMenuBar menuBar = new JMenuBar();
 		JMenu mainMenu = new JMenu("Menu");
@@ -100,7 +100,7 @@ public class ResearchCollectionGUI extends JFrame{
 
     
 
-     
+     //EFFECTS: adds items to menu
 	private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
 		JMenuItem menuItem = new JMenuItem(action);
 		menuItem.setMnemonic(menuItem.getText().charAt(0));
@@ -110,7 +110,7 @@ public class ResearchCollectionGUI extends JFrame{
 
     
     
-
+    //EFFECTS: handles adding a paper to panel
     private class AddPaperAction extends AbstractAction {
 		
 		AddPaperAction() {
@@ -136,18 +136,19 @@ public class ResearchCollectionGUI extends JFrame{
 					  JOptionPane.QUESTION_MESSAGE);
 
                       
-			try {
+			
 				if (titleLoc != null && authorLoc != null && displineLoc != null) {
 					ResearchPaper p = new ResearchPaper(titleLoc, authorLoc, displineLoc);
+                    c.addPaper(p);
 					desktop.add(new AddPaper(p, ResearchCollectionGUI.this));
-				}
-			} catch (DuplicatePaperException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Already added", 
-						JOptionPane.ERROR_MESSAGE);
-			}
+                    //addPaperDisplayPanel(); //how do i link this to the info above
+			
         }
 	}
+}
 
+
+    //EFFECTS: displays collection on panel
     private class ViewCollectionAction extends AbstractAction {
 		
 		ViewCollectionAction() {
@@ -161,6 +162,7 @@ public class ResearchCollectionGUI extends JFrame{
         }
 	}
 
+    //EFFECTS: searches through collection and displays search result (paper panels)
     private class SearchCollectionAction extends AbstractAction {
 		
 		SearchCollectionAction() {
@@ -176,18 +178,16 @@ public class ResearchCollectionGUI extends JFrame{
 					  JOptionPane.QUESTION_MESSAGE);
 
                       
-			try {
+			
 				if (searchLoc != null) {
 					c.filterCollection(searchLoc);
 					// TODO: display results of search 
-				}
-			} catch (InvalidSearchException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Invalid search term", 
-						JOptionPane.ERROR_MESSAGE);
-			}
+			
         }
     }
+}
 
+    //EFFECTS: saves collection to data base 
     private class SaveCollectionAction extends AbstractAction {
 		
 		SaveCollectionAction() {
@@ -199,17 +199,12 @@ public class ResearchCollectionGUI extends JFrame{
         public void actionPerformed(ActionEvent evt) {
             
                       
-			try {
-				//TODO: implement to save
-				
-			} catch(FileNotFoundException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Already added", 
-						JOptionPane.ERROR_MESSAGE);
-			}
+			//TODO: implement 
         }
 
     }
 
+    //EFFECTS: reloads collection and displays it on panels 
      private class LoadCollectionAction extends AbstractAction {
 		
 		LoadCollectionAction() {
@@ -226,13 +221,7 @@ public class ResearchCollectionGUI extends JFrame{
         
 
                       
-			try {
-				// TODO:implement loading data
-				
-			} catch(IOException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Loading Error", 
-						JOptionPane.ERROR_MESSAGE);
-			}
+			//TODO: implment
             
         }
 	}
@@ -240,10 +229,10 @@ public class ResearchCollectionGUI extends JFrame{
 	
 
     
-		
+	//EFFECTS: recieves mouse events	
     private class DesktopFocusAction extends MouseAdapter {
 
-		public void mouseClicked(MouseEvent e) {
+		public void mouseClicked(MouseEvent evt) {
 			ResearchCollectionGUI.this.requestFocusInWindow();
 		}
 	}

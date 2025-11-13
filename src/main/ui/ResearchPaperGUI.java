@@ -8,19 +8,23 @@ import javax.swing.JPanel;
 
 import org.w3c.dom.events.MouseEvent;
 
+import model.ResearchPaper;
+
 public class ResearchPaperGUI extends JPanel{
 
-    private static final int WIDTH = 100;
-	private static final int HEIGHT = 30;
+    private static final int WIDTH = 30;
+	private static final int HEIGHT = 100;
 	private static final int TEXT_INDENT = 30;
-	private static final String data[] = {"Paper title"};
+	private final String data[] = {"Paper Title"}; //TODO: change so it shows papers title
 	private int displayString;
 	private Color fillColor;
+    private ResearchPaper p;
 	
-	/**
-	 * Constructor creates interface to display paper
-	 */
+	
+	//EFFECTS: creates interface to display paper
+	 
 	public ResearchPaperGUI() {
+        
 		displayString = 0;
 		fillColor = Color.pink;
 		setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -28,6 +32,7 @@ public class ResearchPaperGUI extends JPanel{
 	
 	@Override
 	public void paint(Graphics g) {
+        //String data[] = {p.getPTitle()};
 		super.paint(g);
 		g.setColor(fillColor);
 		g.fillRect(0, 0, getWidth(), getHeight());
