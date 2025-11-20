@@ -27,228 +27,211 @@ import javax.swing.WindowConstants;
 
 import org.w3c.dom.events.MouseEvent;
 
-
 import model.ResearchCollection;
 import model.ResearchPaper;
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
 //TODO: add credit to all gui classes
-//TODO: add method specification
+//TODO: add button to view paper info
 
-public class ResearchCollectionGUI extends JFrame{
+public class ResearchCollectionGUI extends JFrame {
     private Color fillColor;
     private static final int WIDTH = 800;
-	private static final int HEIGHT = 600;
-	private static final int TEXT_INDENT = 30;
+    private static final int HEIGHT = 600;
+    private static final int TEXT_INDENT = 30;
 
     private ResearchCollection c;
     private JComboBox<String> printCombo;
-	private JDesktopPane desktop;
-	private JInternalFrame controlPanel;
-    
-    //EFFECTS: creates graphfical interface for reserachcollection
-    public ResearchCollectionGUI(){
+    private JDesktopPane desktop;
+    private JInternalFrame controlPanel;
+
+    private static final String JSON_STORE = "./data/researchcollection.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    // EFFECTS: creates graphfical interface for reserachcollection
+    public ResearchCollectionGUI() {
         c = new ResearchCollection();
 
         desktop = new JDesktopPane();
-		desktop.addMouseListener(new DesktopFocusAction());
-		controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
-		controlPanel.setLayout(new BorderLayout());
-		
-		setContentPane(desktop);
-		setTitle("My Research Collection");
-		setSize(WIDTH, HEIGHT);
-		
-		this.fillColor = Color.pink;
-		addMenu();
-		
-		
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		centreOnScreen();
-		setVisible(true);
+        desktop.addMouseListener(new DesktopFocusAction());
+        controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
+        controlPanel.setLayout(new BorderLayout());
+
+        setContentPane(desktop);
+        setTitle("My Research Collection");
+        setSize(WIDTH, HEIGHT);
+
+        this.fillColor = Color.pink;
+        addMenu();
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        centreOnScreen();
+        setVisible(true);
     }
 
     // EFFECTS: centres display panel on screen
-   private void centreOnScreen() {
-		int width = Toolkit.getDefaultToolkit().getScreenSize().width;
-		int height = Toolkit.getDefaultToolkit().getScreenSize().height;
-		setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
-	}
-
-     //EFFECTS: adds display panels for papers
-    private void addPaperDisplayPanel() {
-        ResearchPaperGUI paperGUI = new ResearchPaperGUI();
-		desktop.add(paperGUI, BorderLayout.NORTH);
+    private void centreOnScreen() {
+        int width = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int height = Toolkit.getDefaultToolkit().getScreenSize().height;
+        setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
 
-    
+    // EFFECTS: adds display panels for papers
+    private void addPaperDisplayPanel(ResearchPaper paper) {
+        ResearchPaperGUI paperGUI = new ResearchPaperGUI(paper, ResearchCollectionGUI.this);
 
-   
-    //EFFECTS: adds menu
+        desktop.add(paperGUI, BorderLayout.NORTH);
+    }
+
+    // EFFECTS: adds menu
     private void addMenu() {
         JMenuBar menuBar = new JMenuBar();
-		JMenu mainMenu = new JMenu("Menu");
-		mainMenu.setMnemonic('S');
-		addMenuItem(mainMenu, new AddPaperAction(), null);
+        JMenu mainMenu = new JMenu("Menu");
+        mainMenu.setMnemonic('S');
+        addMenuItem(mainMenu, new AddPaperAction(), null);
         addMenuItem(mainMenu, new ViewCollectionAction(), null);
-		addMenuItem(mainMenu, new SearchCollectionAction(), null);
+        addMenuItem(mainMenu, new SearchCollectionAction(), null);
         addMenuItem(mainMenu, new SaveCollectionAction(), null);
-		addMenuItem(mainMenu, new LoadCollectionAction(), null);
-		menuBar.add(mainMenu);
-		
-		setJMenuBar(menuBar);
+        addMenuItem(mainMenu, new LoadCollectionAction(), null);
+        menuBar.add(mainMenu);
+
+        setJMenuBar(menuBar);
     }
 
-    
+    // EFFECTS: adds items to menu
+    private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
+        JMenuItem menuItem = new JMenuItem(action);
+        menuItem.setMnemonic(menuItem.getText().charAt(0));
+        menuItem.setAccelerator(accelerator);
+        theMenu.add(menuItem);
+    }
 
-     //EFFECTS: adds items to menu
-	private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
-		JMenuItem menuItem = new JMenuItem(action);
-		menuItem.setMnemonic(menuItem.getText().charAt(0));
-		menuItem.setAccelerator(accelerator);
-		theMenu.add(menuItem);
-	}
-
-    
-    
-    //EFFECTS: handles adding a paper to panel
+    // EFFECTS: handles adding a paper to panel
     private class AddPaperAction extends AbstractAction {
-		
-		AddPaperAction() {
-			super("Add Paper");
-		}
-		
+
+        AddPaperAction() {
+            super("Add Paper");
+        }
 
         @Override
         public void actionPerformed(ActionEvent evt) {
             String titleLoc = JOptionPane.showInputDialog(null,
-					  "Title of Paper?",
-					  "Enter papers title",
-					  JOptionPane.QUESTION_MESSAGE);
+                    "Title of Paper?",
+                    "Enter papers title",
+                    JOptionPane.QUESTION_MESSAGE);
 
             String authorLoc = JOptionPane.showInputDialog(null,
-					  "Author of Paper?",
-					  "Enter papers author",
-					  JOptionPane.QUESTION_MESSAGE);
+                    "Author of Paper?",
+                    "Enter papers author",
+                    JOptionPane.QUESTION_MESSAGE);
 
-             String displineLoc = JOptionPane.showInputDialog(null,
-					  "Displine of Paper?",
-					  "Enter papers displine",
-					  JOptionPane.QUESTION_MESSAGE);
+            String displineLoc = JOptionPane.showInputDialog(null,
+                    "Displine of Paper?",
+                    "Enter papers displine",
+                    JOptionPane.QUESTION_MESSAGE);
 
-                      
-			
-				if (titleLoc != null && authorLoc != null && displineLoc != null) {
-					ResearchPaper p = new ResearchPaper(titleLoc, authorLoc, displineLoc);
-                    c.addPaper(p);
-					desktop.add(new AddPaper(p, ResearchCollectionGUI.this));
-                    //addPaperDisplayPanel(); //how do i link this to the info above
-			
+            if (titleLoc != null && authorLoc != null && displineLoc != null) {
+                ResearchPaper p = new ResearchPaper(titleLoc, authorLoc, displineLoc);
+                c.addPaper(p);
+                desktop.add(new AddPaper(p, ResearchCollectionGUI.this)); // move this to action performed by button in
+                                                                          // rpGUI
+                // addPaperDisplayPanel(p); //how do i link this to the info above
+                // desktop.add(new ResearchPaperGUI(p, ResearchCollectionGUI.this));
+
+            }
         }
-	}
-}
+    }
 
-
-    //EFFECTS: displays collection on panel
+    // EFFECTS: displays collection on panel
     private class ViewCollectionAction extends AbstractAction {
-		
-		ViewCollectionAction() {
-			super("View Collection");
-		}
-		
+
+        ViewCollectionAction() {
+            super("View Collection");
+        }
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            //TODO: implement viewing list collection -> add graphical component
+            // TODO: implement viewing list collection -> add graphical component
         }
-	}
+    }
 
-    //EFFECTS: searches through collection and displays search result (paper panels)
+    // EFFECTS: searches through collection and displays search result (paper
+    // panels)
     private class SearchCollectionAction extends AbstractAction {
-		
-		SearchCollectionAction() {
-			super("Search Collection");
-		}
-		
+
+        SearchCollectionAction() {
+            super("Search Collection");
+        }
 
         @Override
         public void actionPerformed(ActionEvent evt) {
             String searchLoc = JOptionPane.showInputDialog(null,
-					  "Search by Title, Author, or Displine",
-					  "Enter search term",
-					  JOptionPane.QUESTION_MESSAGE);
+                    "Search by Title, Author, or Displine",
+                    "Enter search term",
+                    JOptionPane.QUESTION_MESSAGE);
 
-                      
-			
-				if (searchLoc != null) {
-					c.filterCollection(searchLoc);
-					// TODO: display results of search 
-			
+            if (searchLoc != null) {
+                c.filterCollection(searchLoc);
+                // TODO: display results of search
+
+            }
         }
     }
-}
 
-    //EFFECTS: saves collection to data base 
+    // EFFECTS: saves collection to data base
     private class SaveCollectionAction extends AbstractAction {
-		
-		SaveCollectionAction() {
-			super("Save Collection");
-		}
-		
+
+        SaveCollectionAction() {
+            super("Save Collection");
+        }
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            
-                      
-			//TODO: implement 
+
+            try {
+                jsonWriter.open();
+                jsonWriter.write(c);
+                jsonWriter.close();
+                System.out.println("Saved " + "My papers" + " to " + JSON_STORE);
+            } catch (FileNotFoundException e) {
+                System.out.println("Unable to write to file: " + JSON_STORE);
+            }
         }
 
     }
 
-    //EFFECTS: reloads collection and displays it on panels 
-     private class LoadCollectionAction extends AbstractAction {
-		
-		LoadCollectionAction() {
-			super("Load Collection");
-		}
-		
+    // EFFECTS: reloads collection and displays it on panels
+    private class LoadCollectionAction extends AbstractAction {
 
-
+        LoadCollectionAction() {
+            super("Collection History");
+        }
 
         @Override
-            public void actionPerformed(ActionEvent evt) {
-                
-            
-        
+        public void actionPerformed(ActionEvent evt) {
+            try {
+                c = jsonReader.read();
+                System.out.println("Loaded " + "My papers" + " from " + JSON_STORE);
+            } catch (IOException e) {
+                System.out.println("Unable to read from file: " + JSON_STORE);
+            }
 
-                      
-			//TODO: implment
-            
         }
-	}
-        
-	
+    }
 
-    
-	//EFFECTS: recieves mouse events	
+    // EFFECTS: recieves mouse events
     private class DesktopFocusAction extends MouseAdapter {
 
-		public void mouseClicked(MouseEvent evt) {
-			ResearchCollectionGUI.this.requestFocusInWindow();
-		}
-	}
+        public void mouseClicked(MouseEvent evt) {
+            ResearchCollectionGUI.this.requestFocusInWindow();
+        }
+    }
 
-    //EFFECTS: starts the application
-	public static void main(String[] args) {
-		new ResearchCollectionGUI();
-	}
-    
-
-
-
-    
-
-    
-    
- 
+    // EFFECTS: starts the application
+    public static void main(String[] args) {
+        new ResearchCollectionGUI();
+    }
 
 }
