@@ -78,7 +78,7 @@ public class ViewCollection extends JPanel {
             content.getContentPane().add(paperInfo, BorderLayout.CENTER);
 
             
-            content.setSize(200, 400);
+            content.setSize(300, 400);
             content.setVisible(true);
 
             desktop.add(content);

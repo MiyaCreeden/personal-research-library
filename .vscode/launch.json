@@ -4,7 +4,27 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-    
+        {
+            "type": "java",
+            "name": "ViewCollectionTester",
+            "request": "launch",
+            "mainClass": "ui.ViewCollectionTester",
+            "projectName": "project-o2o7w_ceac8624"
+        },
+        {
+            "type": "java",
+            "name": "ResearchPaperGUI",
+            "request": "launch",
+            "mainClass": "ui.ResearchPaperGUI",
+            "projectName": "project-o2o7w_ceac8624"
+        },
+        {
+            "type": "java",
+            "name": "ResearchCollectionGUI",
+            "request": "launch",
+            "mainClass": "ui.ResearchCollectionGUI",
+            "projectName": "project-o2o7w_ceac8624"
+        },
         {
             "type": "java",
             "name": "Current File",

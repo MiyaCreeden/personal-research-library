@@ -1,23 +1,16 @@
 {"My papers": [
     {
-        "read": true,
+        "read": false,
+        "author": "sarah",
+        "displine": "econ",
+        "rating": 0,
+        "title": "title`1"
+    },
+    {
+        "read": false,
         "author": "miya",
         "displine": "math",
         "rating": 0,
-        "title": "test1"
-    },
-    {
-        "read": false,
-        "author": "jim",
-        "displine": "econ",
-        "rating": 6,
-        "title": "test2"
-    },
-    {
-        "read": false,
-        "author": "daph",
-        "displine": "bio",
-        "rating": 0,
-        "title": "test3"
+        "title": "title2"
     }
 ]}

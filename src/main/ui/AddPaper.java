@@ -12,9 +12,11 @@ import javax.swing.JTextField;
 
 import model.ResearchPaper;
 
+//TODO: add alarm system credit
+
 
 public class AddPaper extends JInternalFrame{
-    private static final int WIDTH = 200;
+    private static final int WIDTH = 300;
 	private static final int HEIGHT = 400;
 	private static final int LOC = 100;
 	private static int sensorCount = 0;

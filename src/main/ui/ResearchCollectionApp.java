@@ -162,8 +162,8 @@ public class ResearchCollectionApp {
         }
 
         displayViewMenu();
-        String input = ""; /// this line of code is cause an invalid input message after evalutating a
-                           /// rating for a paper
+        String input = ""; 
+                           
         while (!input.equals("q")) {
             ResearchPaper currentPaper = collection.getResearchCollection().get(this.currentIndex);
             displayPaper(currentPaper);

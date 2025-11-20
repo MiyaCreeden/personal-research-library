@@ -32,8 +32,9 @@ import model.ResearchPaper;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
-//TODO: add credit to all gui classes
-//TODO: add button to view paper info
+//TODO: add alaram system credit to all gui classes
+
+// TODO: add graphical component
 
 public class ResearchCollectionGUI extends JFrame {
     private Color fillColor;
@@ -53,6 +54,8 @@ public class ResearchCollectionGUI extends JFrame {
     // EFFECTS: creates graphfical interface for reserachcollection
     public ResearchCollectionGUI() {
         c = new ResearchCollection();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopFocusAction());
@@ -139,10 +142,7 @@ public class ResearchCollectionGUI extends JFrame {
             if (titleLoc != null && authorLoc != null && displineLoc != null) {
                 ResearchPaper p = new ResearchPaper(titleLoc, authorLoc, displineLoc);
                 c.addPaper(p);
-                //desktop.add(new AddPaper(p, ResearchCollectionGUI.this)); // move this to action performed by button in
-                                                                          // rpGUI
-                // addPaperDisplayPanel(p); //how do i link this to the info above
-                // desktop.add(new ResearchPaperGUI(p, ResearchCollectionGUI.this));
+            
 
             }
         }
@@ -167,8 +167,8 @@ public class ResearchCollectionGUI extends JFrame {
             
             desktop.add(collectionFrame);
             desktop.revalidate();
-            //desktop.add(new ViewCollection(c, ResearchCollectionGUI.this), BorderLayout.CENTER);
-            // TODO: implement viewing list collection -> add graphical component
+            
+            
             
         }
     }
@@ -206,13 +206,23 @@ public class ResearchCollectionGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
 
+            if (c == null) {
+            JOptionPane.showMessageDialog(ResearchCollectionGUI.this, "No collection to save.",
+                    "Save Error", JOptionPane.ERROR_MESSAGE);
+            }
+
             try {
                 jsonWriter.open();
                 jsonWriter.write(c);
                 jsonWriter.close();
-                System.out.println("Saved " + "My papers" + " to " + JSON_STORE);
+                System.out.println("Saved my papers to " + JSON_STORE);
+                
+            JOptionPane.showMessageDialog(ResearchCollectionGUI.this,
+                    "Collection saved to " + JSON_STORE, "Save Successful", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException e) {
                 System.out.println("Unable to write to file: " + JSON_STORE);
+                JOptionPane.showMessageDialog(ResearchCollectionGUI.this, "Could not save",
+                    "Save Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -222,7 +232,7 @@ public class ResearchCollectionGUI extends JFrame {
     private class LoadCollectionAction extends AbstractAction {
 
         LoadCollectionAction() {
-            super("Collection History");
+            super("Load Collection");
         }
 
         @Override
@@ -230,8 +240,12 @@ public class ResearchCollectionGUI extends JFrame {
             try {
                 c = jsonReader.read();
                 System.out.println("Loaded " + "My papers" + " from " + JSON_STORE);
+                JOptionPane.showMessageDialog(ResearchCollectionGUI.this,
+                    "Collection loaded from " + JSON_STORE, "Load Successful", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
                 System.out.println("Unable to read from file: " + JSON_STORE);
+                JOptionPane.showMessageDialog(ResearchCollectionGUI.this, "Could not load.",
+                    "Loading Error", JOptionPane.ERROR_MESSAGE);
             }
 
         }
