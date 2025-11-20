@@ -78,6 +78,10 @@ public class ResearchCollectionGUI extends JFrame {
         setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
 
+    public JDesktopPane getDesktop(){
+        return desktop;
+    }
+
     // EFFECTS: adds display panels for papers
     private void addPaperDisplayPanel(ResearchPaper paper) {
         ResearchPaperGUI paperGUI = new ResearchPaperGUI(paper, ResearchCollectionGUI.this);
@@ -135,7 +139,7 @@ public class ResearchCollectionGUI extends JFrame {
             if (titleLoc != null && authorLoc != null && displineLoc != null) {
                 ResearchPaper p = new ResearchPaper(titleLoc, authorLoc, displineLoc);
                 c.addPaper(p);
-                desktop.add(new AddPaper(p, ResearchCollectionGUI.this)); // move this to action performed by button in
+                //desktop.add(new AddPaper(p, ResearchCollectionGUI.this)); // move this to action performed by button in
                                                                           // rpGUI
                 // addPaperDisplayPanel(p); //how do i link this to the info above
                 // desktop.add(new ResearchPaperGUI(p, ResearchCollectionGUI.this));
@@ -153,7 +157,19 @@ public class ResearchCollectionGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
+            ViewCollection view = new ViewCollection(c, ResearchCollectionGUI.this);
+            JInternalFrame collectionFrame = new JInternalFrame("My Collection", false, true, false, false);
+            collectionFrame.getContentPane().setLayout(new BorderLayout());
+            collectionFrame.getContentPane().add(view, BorderLayout.CENTER);
+            collectionFrame.setVisible(true);
+            collectionFrame.setSize(700, 500);
+            collectionFrame.setLocation(50,50);
+            
+            desktop.add(collectionFrame);
+            desktop.revalidate();
+            //desktop.add(new ViewCollection(c, ResearchCollectionGUI.this), BorderLayout.CENTER);
             // TODO: implement viewing list collection -> add graphical component
+            
         }
     }
 

@@ -67,8 +67,9 @@ public class AddPaper extends JInternalFrame{
 		setPosition(parent);
 		sensorCount++;
 		setVisible(true);
+        
 	} 
-    //how do you get the text to fit the screen 
+   
 
    
 
