@@ -18,26 +18,24 @@ import javax.swing.ListSelectionModel;
 import model.ResearchCollection;
 import model.ResearchPaper;
 
-
-
 //Credit: code in this class was inspired by ListDialog and ListDemo
 // in Oracle (https://docs.oracle.com/javase/tutorial/uiswing/components/list.html)
 
 //creates a panel to display research collection
 public class ViewCollection extends JPanel {
-    public JList<String> paperList;
-    public ResearchCollection c;
-    public Component parent;
+    private JList<String> paperList;
+    private ResearchCollection collection;
+    private Component parent;
 
     // EFFECTS: instantiates a JList of research papers (the research collection)
     public ViewCollection(ResearchCollection collection, Component parent) {
-        this.c = collection;
+        this.collection = collection;
         this.parent = parent;
 
         setLayout(getLayout());
         setPreferredSize(new Dimension(700, 500));
 
-        List<ResearchPaper> papers = c.getResearchCollection();
+        List<ResearchPaper> papers = collection.getResearchCollection();
         String[] paperTitles = new String[papers.size()];
         int i = 0;
         for (ResearchPaper p : papers) {
@@ -63,20 +61,19 @@ public class ViewCollection extends JPanel {
     private void viewSelectedPaper() {
         int index = paperList.getSelectedIndex();
         if (index >= 0) {
-            ResearchPaper paper = c.getResearchCollection().get(index);
+            ResearchPaper paper = collection.getResearchCollection().get(index);
 
             AddPaper paperInfo = new AddPaper(paper, parent);
 
             JFrame frame = (JFrame) parent;
             ResearchCollectionGUI gui = (ResearchCollectionGUI) frame;
-            JDesktopPane desktop = gui.getDesktop(); 
+            JDesktopPane desktop = gui.getDesktop();
 
-            JInternalFrame content = new JInternalFrame(paper.getPTitle(), false, true,false,false);
+            JInternalFrame content = new JInternalFrame(paper.getPTitle(), false, true, false, false);
 
             content.getContentPane().setLayout(new BorderLayout());
             content.getContentPane().add(paperInfo, BorderLayout.CENTER);
 
-            
             content.setSize(300, 400);
             content.setVisible(true);
 

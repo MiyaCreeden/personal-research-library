@@ -30,8 +30,6 @@ import model.ResearchPaper;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
-
-
 //Credit: code written in this class (and private classes) is inspired by AlarmSystem:
 // (https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git)
 
@@ -42,7 +40,7 @@ public class ResearchCollectionGUI extends JFrame {
     private static final int HEIGHT = 600;
     private static final int TEXT_INDENT = 30;
 
-    private ResearchCollection c;
+    private ResearchCollection collection;
     private JComboBox<String> printCombo;
     private JDesktopPane desktop;
     private JInternalFrame controlPanel;
@@ -53,7 +51,7 @@ public class ResearchCollectionGUI extends JFrame {
 
     // EFFECTS: instantiates the gui
     public ResearchCollectionGUI() {
-        c = new ResearchCollection();
+        collection = new ResearchCollection();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
@@ -86,9 +84,7 @@ public class ResearchCollectionGUI extends JFrame {
         return desktop;
     }
 
-    
-
-    //MODIFIES: this
+    // MODIFIES: this
     // EFFECTS: adds menu
     private void addMenu() {
         JMenuBar menuBar = new JMenuBar();
@@ -104,7 +100,6 @@ public class ResearchCollectionGUI extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    
     // EFFECTS: adds items to menu
     private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
         JMenuItem menuItem = new JMenuItem(action);
@@ -113,20 +108,19 @@ public class ResearchCollectionGUI extends JFrame {
         theMenu.add(menuItem);
     }
 
-   
-    //Credit: code written in this class was inspired by IconDemo in Oracle
-    //(https://docs.oracle.com/javase/tutorial/uiswing/components/icon.html)
-    // and photo credit:(https://www.mosio.com/more-clinical-research-memes-mosio-for-research/)
+    // Credit: code written in this class was inspired by IconDemo in Oracle
+    // (https://docs.oracle.com/javase/tutorial/uiswing/components/icon.html)
+    // and photo
+    // credit:(https://www.mosio.com/more-clinical-research-memes-mosio-for-research/)
 
     // handles adding a paper to panel
     private class AddPaperAction extends AbstractAction {
 
-        //EFFECTS: instantiates action with given name
+        // EFFECTS: instantiates action with given name
         AddPaperAction() {
             super("Add Paper");
         }
 
-  
         @Override
         public void actionPerformed(ActionEvent evt) {
             String titleLoc = JOptionPane.showInputDialog(null,
@@ -146,34 +140,27 @@ public class ResearchCollectionGUI extends JFrame {
 
             if (titleLoc != null && authorLoc != null && displineLoc != null) {
                 ResearchPaper p = new ResearchPaper(titleLoc, authorLoc, displineLoc);
-                c.addPaper(p);
-                ImageIcon displayIcon = new ImageIcon(
-                        "src/main/resources/images/addpaperimage.png");
-                
-                Image scaled = displayIcon.getImage().getScaledInstance(500,450, Image.SCALE_SMOOTH);
+                collection.addPaper(p);
+                ImageIcon displayIcon = new ImageIcon("src/main/resources/images/addpaperimage.png");
+                Image scaled = displayIcon.getImage().getScaledInstance(500, 450, Image.SCALE_SMOOTH);
                 ImageIcon img = new ImageIcon(scaled);
-
                 Image thumbImg = img.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
                 ImageIcon thumbIcon = new ImageIcon(thumbImg);
-
-                VisualComponentAction vca = new VisualComponentAction(img, thumbIcon,
-                        "Successfully added paper!");
-
+                VisualComponentAction vca = new VisualComponentAction(img, thumbIcon, "Successfully added paper!");
                 vca.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "showImage"));
-
             }
         }
     }
 
-    //Credit: code written in this class was inspired by IconDemo in Oracle
-    //(https://docs.oracle.com/javase/tutorial/uiswing/components/icon.html)
+    // Credit: code written in this class was inspired by IconDemo in Oracle
+    // (https://docs.oracle.com/javase/tutorial/uiswing/components/icon.html)
 
-    //displays image on screen whenever paper is added to the collection
+    // displays image on screen whenever paper is added to the collection
     private class VisualComponentAction extends AbstractAction {
         private Icon displayPhoto;
         private Icon thumb;
 
-        //EFFECTS: instantiates action 
+        // EFFECTS: instantiates action
         public VisualComponentAction(Icon photo, Icon thumb, String desc) {
             super(desc);
             this.displayPhoto = photo;
@@ -204,14 +191,14 @@ public class ResearchCollectionGUI extends JFrame {
     // displays collection on panel
     private class ViewCollectionAction extends AbstractAction {
 
-        //EFFECTS: instantiates action with given name
+        // EFFECTS: instantiates action with given name
         ViewCollectionAction() {
             super("View Collection");
         }
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            ViewCollection view = new ViewCollection(c, ResearchCollectionGUI.this);
+            ViewCollection view = new ViewCollection(collection, ResearchCollectionGUI.this);
             JInternalFrame collectionFrame = new JInternalFrame("My Collection", false, true, false, false);
             collectionFrame.getContentPane().setLayout(new BorderLayout());
             collectionFrame.getContentPane().add(view, BorderLayout.CENTER);
@@ -230,7 +217,7 @@ public class ResearchCollectionGUI extends JFrame {
     // initiates the filter method in gui
     private class SearchCollectionAction extends AbstractAction {
 
-         //EFFECTS: instantiates action with given name
+        // EFFECTS: instantiates action with given name
         SearchCollectionAction() {
             super("Search Collection");
         }
@@ -243,8 +230,8 @@ public class ResearchCollectionGUI extends JFrame {
                     JOptionPane.QUESTION_MESSAGE);
 
             if (searchLoc != null) {
-                c.filterCollection(searchLoc);
-                SearchCollection filtered = new SearchCollection(c.filterCollection(searchLoc),
+                collection.filterCollection(searchLoc);
+                SearchCollection filtered = new SearchCollection(collection.filterCollection(searchLoc),
                         ResearchCollectionGUI.this);
                 JInternalFrame searchFrame = new JInternalFrame("Search Results", false, true, false, false);
                 searchFrame.getContentPane().setLayout(new BorderLayout());
@@ -265,7 +252,7 @@ public class ResearchCollectionGUI extends JFrame {
     // saves collection to data base
     private class SaveCollectionAction extends AbstractAction {
 
-        //EFFECTS: instantiates action with given name
+        // EFFECTS: instantiates action with given name
         SaveCollectionAction() {
             super("Save Collection");
         }
@@ -273,14 +260,14 @@ public class ResearchCollectionGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
 
-            if (c == null) {
+            if (collection == null) {
                 JOptionPane.showMessageDialog(ResearchCollectionGUI.this, "No collection to save.",
                         "Save Error", JOptionPane.ERROR_MESSAGE);
             }
 
             try {
                 jsonWriter.open();
-                jsonWriter.write(c);
+                jsonWriter.write(collection);
                 jsonWriter.close();
                 System.out.println("Saved my papers to " + JSON_STORE);
 
@@ -295,10 +282,10 @@ public class ResearchCollectionGUI extends JFrame {
 
     }
 
-    //loads collection from database and displays it on panel
+    // loads collection from database and displays it on panel
     private class LoadCollectionAction extends AbstractAction {
 
-        //EFFECTS: instantiates action with given name
+        // EFFECTS: instantiates action with given name
         LoadCollectionAction() {
             super("Load Collection");
         }
@@ -306,7 +293,7 @@ public class ResearchCollectionGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try {
-                c = jsonReader.read();
+                collection = jsonReader.read();
                 System.out.println("Loaded " + "My papers" + " from " + JSON_STORE);
                 JOptionPane.showMessageDialog(ResearchCollectionGUI.this,
                         "Collection loaded from " + JSON_STORE, "Load Successful", JOptionPane.INFORMATION_MESSAGE);
