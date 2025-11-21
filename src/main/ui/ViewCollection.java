@@ -2,29 +2,28 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 import model.ResearchCollection;
 import model.ResearchPaper;
 
-//TODO: add credit to ListDialog and ListDemo in Oracle
 
+
+//Credit: code in this class was inspired by ListDialog and ListDemo
+// in Oracle (https://docs.oracle.com/javase/tutorial/uiswing/components/list.html)
+
+//creates a panel to display research collection
 public class ViewCollection extends JPanel {
     public JList<String> paperList;
     public ResearchCollection c;

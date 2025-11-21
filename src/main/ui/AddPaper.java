@@ -12,9 +12,10 @@ import javax.swing.JTextField;
 
 import model.ResearchPaper;
 
-//TODO: add alarm system credit
+//Credit: code written in this class (and private classes) is inspired by AlarmSystem:
+// (https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git)
 
-
+//creates a panel for papers details
 public class AddPaper extends JInternalFrame{
     private static final int WIDTH = 300;
 	private static final int HEIGHT = 400;
@@ -33,7 +34,7 @@ public class AddPaper extends JInternalFrame{
     private int rating;
 
 
-    //EFFECTS: instantiates a new paper on the screen
+    //EFFECTS: instantiates a new paper details panel on the screen
     public AddPaper(ResearchPaper p, Component parent) {
 		title = p.getPTitle();
         author = p.getAuthor();
@@ -75,7 +76,7 @@ public class AddPaper extends JInternalFrame{
 
    
 
-    
+    //MODIFIES: this
     //EFFECTS: sets position of new paper
     private void setPosition(Component parent) {
 		setLocation(LOC * sensorCount, parent.getHeight() / 2 + LOC * sensorCount / 5);

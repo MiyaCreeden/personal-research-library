@@ -2,27 +2,25 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.rmi.Remote;
-
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.w3c.dom.events.MouseEvent;
@@ -32,10 +30,12 @@ import model.ResearchPaper;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
-//TODO: add alaram system credit to all gui classes
 
-// TODO: add graphical component
 
+//Credit: code written in this class (and private classes) is inspired by AlarmSystem:
+// (https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git)
+
+//creates graphical interface for research collection
 public class ResearchCollectionGUI extends JFrame {
     private Color fillColor;
     private static final int WIDTH = 800;
@@ -51,7 +51,7 @@ public class ResearchCollectionGUI extends JFrame {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // EFFECTS: creates graphfical interface for reserachcollection
+    // EFFECTS: instantiates the gui
     public ResearchCollectionGUI() {
         c = new ResearchCollection();
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -72,6 +72,7 @@ public class ResearchCollectionGUI extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         centreOnScreen();
         setVisible(true);
+        desktop.setBackground(fillColor);
     }
 
     // EFFECTS: centres display panel on screen
@@ -81,17 +82,13 @@ public class ResearchCollectionGUI extends JFrame {
         setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
 
-    public JDesktopPane getDesktop(){
+    public JDesktopPane getDesktop() {
         return desktop;
     }
 
-    // EFFECTS: adds display panels for papers
-    private void addPaperDisplayPanel(ResearchPaper paper) {
-        ResearchPaperGUI paperGUI = new ResearchPaperGUI(paper, ResearchCollectionGUI.this);
+    
 
-        desktop.add(paperGUI, BorderLayout.NORTH);
-    }
-
+    //MODIFIES: this
     // EFFECTS: adds menu
     private void addMenu() {
         JMenuBar menuBar = new JMenuBar();
@@ -107,6 +104,7 @@ public class ResearchCollectionGUI extends JFrame {
         setJMenuBar(menuBar);
     }
 
+    
     // EFFECTS: adds items to menu
     private void addMenuItem(JMenu theMenu, AbstractAction action, KeyStroke accelerator) {
         JMenuItem menuItem = new JMenuItem(action);
@@ -115,13 +113,20 @@ public class ResearchCollectionGUI extends JFrame {
         theMenu.add(menuItem);
     }
 
-    // EFFECTS: handles adding a paper to panel
+   
+    //Credit: code written in this class was inspired by IconDemo in Oracle
+    //(https://docs.oracle.com/javase/tutorial/uiswing/components/icon.html)
+    // and photo credit:(https://www.mosio.com/more-clinical-research-memes-mosio-for-research/)
+
+    // handles adding a paper to panel
     private class AddPaperAction extends AbstractAction {
 
+        //EFFECTS: instantiates action with given name
         AddPaperAction() {
             super("Add Paper");
         }
 
+  
         @Override
         public void actionPerformed(ActionEvent evt) {
             String titleLoc = JOptionPane.showInputDialog(null,
@@ -142,15 +147,64 @@ public class ResearchCollectionGUI extends JFrame {
             if (titleLoc != null && authorLoc != null && displineLoc != null) {
                 ResearchPaper p = new ResearchPaper(titleLoc, authorLoc, displineLoc);
                 c.addPaper(p);
-            
+                ImageIcon displayIcon = new ImageIcon(
+                        "src/main/resources/images/addpaperimage.png");
+                
+                Image scaled = displayIcon.getImage().getScaledInstance(500,450, Image.SCALE_SMOOTH);
+                ImageIcon img = new ImageIcon(scaled);
+
+                Image thumbImg = img.getImage().getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+                ImageIcon thumbIcon = new ImageIcon(thumbImg);
+
+                VisualComponentAction vca = new VisualComponentAction(img, thumbIcon,
+                        "Successfully added paper!");
+
+                vca.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "showImage"));
 
             }
         }
     }
 
-    // EFFECTS: displays collection on panel
+    //Credit: code written in this class was inspired by IconDemo in Oracle
+    //(https://docs.oracle.com/javase/tutorial/uiswing/components/icon.html)
+
+    //displays image on screen whenever paper is added to the collection
+    private class VisualComponentAction extends AbstractAction {
+        private Icon displayPhoto;
+        private Icon thumb;
+
+        //EFFECTS: instantiates action 
+        public VisualComponentAction(Icon photo, Icon thumb, String desc) {
+            super(desc);
+            this.displayPhoto = photo;
+            this.thumb = thumb;
+
+            putValue(SHORT_DESCRIPTION, desc);
+            putValue(LARGE_ICON_KEY, thumb);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JInternalFrame frame = new JInternalFrame("", false, true, false, false);
+            JLabel imageLabel = new JLabel();
+            imageLabel.setIcon(displayPhoto);
+            frame.setTitle(getValue(SHORT_DESCRIPTION).toString());
+            frame.getContentPane().add(imageLabel, BorderLayout.CENTER);
+            frame.setSize(500, 500);
+            frame.setLocation(50, 50);
+            desktop.removeAll();
+            desktop.repaint();
+            desktop.add(frame);
+            frame.setVisible(true);
+
+        }
+
+    }
+
+    // displays collection on panel
     private class ViewCollectionAction extends AbstractAction {
 
+        //EFFECTS: instantiates action with given name
         ViewCollectionAction() {
             super("View Collection");
         }
@@ -163,20 +217,20 @@ public class ResearchCollectionGUI extends JFrame {
             collectionFrame.getContentPane().add(view, BorderLayout.CENTER);
             collectionFrame.setVisible(true);
             collectionFrame.setSize(700, 500);
-            collectionFrame.setLocation(50,50);
-            
+            collectionFrame.setLocation(50, 50);
+
+            desktop.removeAll();
+            desktop.repaint();
             desktop.add(collectionFrame);
             desktop.revalidate();
-            
-            
-            
+
         }
     }
 
-    // EFFECTS: searches through collection and displays search result (paper
-    // panels)
+    // initiates the filter method in gui
     private class SearchCollectionAction extends AbstractAction {
 
+         //EFFECTS: instantiates action with given name
         SearchCollectionAction() {
             super("Search Collection");
         }
@@ -190,15 +244,28 @@ public class ResearchCollectionGUI extends JFrame {
 
             if (searchLoc != null) {
                 c.filterCollection(searchLoc);
-                // TODO: display results of search
+                SearchCollection filtered = new SearchCollection(c.filterCollection(searchLoc),
+                        ResearchCollectionGUI.this);
+                JInternalFrame searchFrame = new JInternalFrame("Search Results", false, true, false, false);
+                searchFrame.getContentPane().setLayout(new BorderLayout());
+                searchFrame.getContentPane().add(filtered, BorderLayout.CENTER);
+                searchFrame.setVisible(true);
+                searchFrame.setSize(700, 500);
+                searchFrame.setLocation(50, 50);
+
+                desktop.removeAll();
+                desktop.repaint();
+                desktop.add(searchFrame);
+                desktop.revalidate();
 
             }
         }
     }
 
-    // EFFECTS: saves collection to data base
+    // saves collection to data base
     private class SaveCollectionAction extends AbstractAction {
 
+        //EFFECTS: instantiates action with given name
         SaveCollectionAction() {
             super("Save Collection");
         }
@@ -207,8 +274,8 @@ public class ResearchCollectionGUI extends JFrame {
         public void actionPerformed(ActionEvent evt) {
 
             if (c == null) {
-            JOptionPane.showMessageDialog(ResearchCollectionGUI.this, "No collection to save.",
-                    "Save Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(ResearchCollectionGUI.this, "No collection to save.",
+                        "Save Error", JOptionPane.ERROR_MESSAGE);
             }
 
             try {
@@ -216,21 +283,22 @@ public class ResearchCollectionGUI extends JFrame {
                 jsonWriter.write(c);
                 jsonWriter.close();
                 System.out.println("Saved my papers to " + JSON_STORE);
-                
-            JOptionPane.showMessageDialog(ResearchCollectionGUI.this,
-                    "Collection saved to " + JSON_STORE, "Save Successful", JOptionPane.INFORMATION_MESSAGE);
+
+                JOptionPane.showMessageDialog(ResearchCollectionGUI.this,
+                        "Collection saved to " + JSON_STORE, "Save Successful", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException e) {
                 System.out.println("Unable to write to file: " + JSON_STORE);
                 JOptionPane.showMessageDialog(ResearchCollectionGUI.this, "Could not save",
-                    "Save Error", JOptionPane.ERROR_MESSAGE);
+                        "Save Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
     }
 
-    // EFFECTS: reloads collection and displays it on panels
+    //loads collection from database and displays it on panel
     private class LoadCollectionAction extends AbstractAction {
 
+        //EFFECTS: instantiates action with given name
         LoadCollectionAction() {
             super("Load Collection");
         }
@@ -241,11 +309,11 @@ public class ResearchCollectionGUI extends JFrame {
                 c = jsonReader.read();
                 System.out.println("Loaded " + "My papers" + " from " + JSON_STORE);
                 JOptionPane.showMessageDialog(ResearchCollectionGUI.this,
-                    "Collection loaded from " + JSON_STORE, "Load Successful", JOptionPane.INFORMATION_MESSAGE);
+                        "Collection loaded from " + JSON_STORE, "Load Successful", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
                 System.out.println("Unable to read from file: " + JSON_STORE);
                 JOptionPane.showMessageDialog(ResearchCollectionGUI.this, "Could not load.",
-                    "Loading Error", JOptionPane.ERROR_MESSAGE);
+                        "Loading Error", JOptionPane.ERROR_MESSAGE);
             }
 
         }
