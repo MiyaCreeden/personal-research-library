@@ -26,6 +26,8 @@ public class ResearchCollection implements Writable {
         } else {
             myPapers.add(paper);
         }
+
+        EventLog.getInstance().logEvent(new Event("Added paper to collection"));
     }
 
     // EFFECTS: constructs a new list of only the papers in the collection
@@ -73,7 +75,10 @@ public class ResearchCollection implements Writable {
             }
 
         }
+        EventLog.getInstance().logEvent(new Event("Filtered through collection by: " + filter));
         return filtered;
+
+        
 
     }
 

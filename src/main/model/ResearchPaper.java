@@ -30,18 +30,21 @@ public class ResearchPaper implements Writable {
     // enjoyment and usefullness of the paper
     public void overallRating(int enjoy, int usefull) {
         this.rating = this.rating + enjoy + usefull;
+        EventLog.getInstance().logEvent(new Event("Rated paper " + rating));
     }
 
     // MODIFIES: this
     // EFFECTS: updates paper status to read
     public void markAsRead() {
         this.readStatus = true;
+        EventLog.getInstance().logEvent(new Event("Marked paper as read"));
     }
 
     // MODIFIES: this
     // EFFECTS: updates paper status to unread
     public void markAsUnread() {
         this.readStatus = false;
+        EventLog.getInstance().logEvent(new Event("Marked paper as unread"));
     }
 
     public String getPTitle() {
