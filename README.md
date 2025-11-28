@@ -56,6 +56,12 @@ and given the option to save my research collection
 - You can save the state of my application by clicking the "Save Collection" button
 - You can reload the state of my application by clicking the "Load Collection" button
 
+## Phase 4: Task 2
+<p>Added paper to collection<br>
+Added paper to collection<br>
+Filtered through collection by: gdaoi<br>
+Filtered through collection by: daug</p>
+
 
 ## Markdown Tools
 ## A subtitle 

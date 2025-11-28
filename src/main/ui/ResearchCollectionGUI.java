@@ -42,6 +42,8 @@ import persistance.JsonWriter;
 
 //Credit: code written in this class (and private classes) is inspired by AlarmSystem:
 // (https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git)
+// also inspired by Oracle WindowEventDemo:
+// (https://docs.oracle.com/javase/tutorial/uiswing/events/windowlistener.html)
 
 //creates graphical interface for research collection
 public class ResearchCollectionGUI extends JFrame implements WindowListener {
