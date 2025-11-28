@@ -63,6 +63,17 @@ Filtered through collection by: gdaoi<br>
 Filtered through collection by: daug</p>
 
 
+## Phase 4: Task 3
+    If there was more time to work on the project, I would have changed my AddPaper, ViewCollection, and SearchCollection classes
+    into abstract classes that only specify the methods to do the tasks within the GUI. The ResearchCollectionGUI would have then
+    handled the creation of the frames that hold these functionalities, and extended the AddPaper, SearchCollection, and ViewCollection 
+    classes. To give an example of this I'll use the AddPaper class, which displays an individual papers details and always the user to edit the rating and mark the paper as read or unread. Instead of instantiating the JFrame in the AddPaper class, that work would be handled by the ResearchCollectionGUI, which would then implement the methods in the now abstract class AddPaper. AddPaper would then handle the modification of rating and read status of the paper. A similar approach would be followed for the SearchCollection
+    and ViewCollection classes. Another thing I would have liked to add was an enumeration, 
+    that would clssify the types of reserach papers by their displine. So the research collection would already be 
+    sorted based off the broader subject of the paper, while a more accurate and niche sub-displine would go into
+    the displine parameter within a paper(i.e. for a math reserach paper, MATH would be the enum and an example
+    of a sub-displine would be Low-dimensional Topology). 
+
 ## Markdown Tools
 ## A subtitle 
 
