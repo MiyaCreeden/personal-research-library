@@ -44,7 +44,7 @@ import persistance.JsonWriter;
 // (https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git)
 
 //creates graphical interface for research collection
-public class ResearchCollectionGUI extends JFrame implements WindowListener{
+public class ResearchCollectionGUI extends JFrame implements WindowListener {
     private Color fillColor;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
@@ -54,7 +54,6 @@ public class ResearchCollectionGUI extends JFrame implements WindowListener{
     private JComboBox<String> printCombo;
     private JDesktopPane desktop;
     private JInternalFrame controlPanel;
-   
 
     private static final String JSON_STORE = "./data/researchcollection.json";
     private JsonWriter jsonWriter;
@@ -65,38 +64,35 @@ public class ResearchCollectionGUI extends JFrame implements WindowListener{
         collection = new ResearchCollection();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        
-
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopFocusAction());
         controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
         controlPanel.setLayout(new BorderLayout());
-
         setContentPane(desktop);
         setTitle("My Research Collection");
         setSize(WIDTH, HEIGHT);
-
         this.fillColor = Color.pink;
         addMenu();
-
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-        addWindowListener(new WindowAdapter(){
-            @Override 
-            public void windowClosing(WindowEvent e){
-                EventLog events = EventLog.getInstance();
-                for(Event evt: events){
-                    System.out.println(evt.getDescription());
-                }
-                System.exit(0);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                printEventLog();
             }
         });
-        
         centreOnScreen();
         setVisible(true);
         desktop.setBackground(fillColor);
+    }
 
-        
+    // EFFECTS: prints event log after user quits
+
+    private void printEventLog() {
+        EventLog events = EventLog.getInstance();
+        for (Event evt : events) {
+            System.out.println(evt.getDescription());
+        }
+        System.exit(0);
     }
 
     // EFFECTS: centres display panel on screen
@@ -256,7 +252,8 @@ public class ResearchCollectionGUI extends JFrame implements WindowListener{
                     JOptionPane.QUESTION_MESSAGE);
 
             if (searchLoc != null) {
-                SearchCollection filtered = new SearchCollection(collection.filterCollection(searchLoc), ResearchCollectionGUI.this);
+                SearchCollection filtered = new SearchCollection(collection.filterCollection(searchLoc),
+                        ResearchCollectionGUI.this);
                 JInternalFrame searchFrame = new JInternalFrame("Search Results", false, true, false, false);
                 searchFrame.getContentPane().setLayout(new BorderLayout());
                 searchFrame.getContentPane().add(filtered, BorderLayout.CENTER);
@@ -345,38 +342,37 @@ public class ResearchCollectionGUI extends JFrame implements WindowListener{
 
     @Override
     public void windowOpened(WindowEvent e) {
-        
+
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        
-       
+
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
-        
+
     }
 
     @Override
     public void windowIconified(WindowEvent e) {
-       
+
     }
 
     @Override
     public void windowDeiconified(WindowEvent e) {
-        
+
     }
 
     @Override
     public void windowActivated(WindowEvent e) {
-        
+
     }
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-      
+
     }
 
 }
