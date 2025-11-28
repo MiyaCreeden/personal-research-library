@@ -3,11 +3,19 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -25,6 +33,8 @@ import javax.swing.WindowConstants;
 
 import org.w3c.dom.events.MouseEvent;
 
+import model.Event;
+import model.EventLog;
 import model.ResearchCollection;
 import model.ResearchPaper;
 import persistance.JsonReader;
@@ -34,7 +44,7 @@ import persistance.JsonWriter;
 // (https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git)
 
 //creates graphical interface for research collection
-public class ResearchCollectionGUI extends JFrame {
+public class ResearchCollectionGUI extends JFrame implements WindowListener{
     private Color fillColor;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
@@ -44,6 +54,7 @@ public class ResearchCollectionGUI extends JFrame {
     private JComboBox<String> printCombo;
     private JDesktopPane desktop;
     private JInternalFrame controlPanel;
+   
 
     private static final String JSON_STORE = "./data/researchcollection.json";
     private JsonWriter jsonWriter;
@@ -54,6 +65,7 @@ public class ResearchCollectionGUI extends JFrame {
         collection = new ResearchCollection();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        
 
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopFocusAction());
@@ -67,10 +79,24 @@ public class ResearchCollectionGUI extends JFrame {
         this.fillColor = Color.pink;
         addMenu();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter(){
+            @Override 
+            public void windowClosing(WindowEvent e){
+                EventLog events = EventLog.getInstance();
+                for(Event evt: events){
+                    System.out.println(evt.getDescription());
+                }
+                System.exit(0);
+            }
+        });
+        
         centreOnScreen();
         setVisible(true);
         desktop.setBackground(fillColor);
+
+        
     }
 
     // EFFECTS: centres display panel on screen
@@ -230,9 +256,7 @@ public class ResearchCollectionGUI extends JFrame {
                     JOptionPane.QUESTION_MESSAGE);
 
             if (searchLoc != null) {
-                collection.filterCollection(searchLoc);
-                SearchCollection filtered = new SearchCollection(collection.filterCollection(searchLoc),
-                        ResearchCollectionGUI.this);
+                SearchCollection filtered = new SearchCollection(collection.filterCollection(searchLoc), ResearchCollectionGUI.this);
                 JInternalFrame searchFrame = new JInternalFrame("Search Results", false, true, false, false);
                 searchFrame.getContentPane().setLayout(new BorderLayout());
                 searchFrame.getContentPane().add(filtered, BorderLayout.CENTER);
@@ -317,6 +341,42 @@ public class ResearchCollectionGUI extends JFrame {
     // EFFECTS: starts the application
     public static void main(String[] args) {
         new ResearchCollectionGUI();
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        
+       
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+       
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+      
     }
 
 }
