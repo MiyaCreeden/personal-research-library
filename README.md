@@ -74,12 +74,3 @@ Filtered through collection by: daug</p>
     the displine parameter within a paper(i.e. for a math reserach paper, MATH would be the enum and an example
     of a sub-displine would be Low-dimensional Topology). 
 
-## Markdown Tools
-## A subtitle 
-
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
-
-An example of text with **bold** and *italic* fonts.  
